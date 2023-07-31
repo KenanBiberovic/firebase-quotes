@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
+import { collection, getDocs, doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase-config";
 import { Link } from "react-router-dom";
 import Card from "@mui/material/Card";
@@ -9,6 +9,15 @@ import Button from "@mui/material/Button";
 
 function AllQuotes() {
   const [quotes, setQuotes] = useState([]);
+  //
+
+  //
+  const getQuoteById = async (id) => {
+    const docRef = doc(db, "quotes", id);
+    const docSnap = await getDoc(docRef);
+    const data = docSnap.data();
+    return { ...data, id: id };
+  };
 
   useEffect(() => {
     const fetchQuotesFromFirestore = async () => {
@@ -29,12 +38,6 @@ function AllQuotes() {
 
     fetchQuotesFromFirestore();
   }, []);
-
-  const deleteQuote = async (id) => {
-    const quoteDoc = doc(db, "quotes", id);
-    await deleteDoc(quoteDoc);
-    window.location.reload();
-  };
 
   return (
     <div>
@@ -62,18 +65,11 @@ function AllQuotes() {
             <Typography variant="body2" color="textSecondary">
               {quote.source}
             </Typography>
-            <Link to={`/edit/`}>
+            <Link to={`/details/:id`}>
               <Button variant="text" color="primary">
-                Edit
+                Details
               </Button>
             </Link>
-            <Button
-              variant="text"
-              color="secondary"
-              onClick={() => deleteQuote(quote.id)}
-            >
-              Delete
-            </Button>
           </CardContent>
         </Card>
       ))}

@@ -6,7 +6,8 @@ import Login from "./Components/Login/Login";
 import Register from "./Components/Register/Register";
 import Navbar from "./Components/Navbar/Navbar";
 import EditQuote from "./Components/EditQuotes/EditQuote";
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import QuoteDetails from "./Components/Details/Details";
+import { Routes, Route, BrowserRouter, useParams } from "react-router-dom";
 import theme from "./Theme";
 
 function App() {
@@ -20,7 +21,8 @@ function App() {
             <Route path="/addquotes" element={<AddQuote />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/edit" element={<EditQuote />} />
+            <Route path="/details/:id" element={<QuoteDetails />} />
+            <Route path="/quote/:id/edit" element={<EditQuote />} />
           </Routes>
         </BrowserRouter>
       </div>

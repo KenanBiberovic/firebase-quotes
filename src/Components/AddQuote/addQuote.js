@@ -11,6 +11,7 @@ function AddQuote() {
   const [author, setAuthor] = useState("");
   const [text, setText] = useState("");
   const [source, setSource] = useState("");
+  const [like, setLike] = useState(0);
 
   const handleAuthorChange = (event) => {
     setAuthor(event.target.value);
@@ -31,10 +32,11 @@ function AddQuote() {
 
     try {
       const quotesCollectionRef = collection(db, "quotes");
-      await addDoc(quotesCollectionRef, { author, text, source });
+      await addDoc(quotesCollectionRef, { author, text, source, like });
       setAuthor("");
       setText("");
       setSource("");
+      setLike(0);
       window.location.reload();
     } catch (error) {
       console.error("Error adding quote:", error);
